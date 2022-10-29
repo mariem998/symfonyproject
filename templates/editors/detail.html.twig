@@ -1,10 +1,13 @@
 {% extends 'template.html.twig' %}
 
-{% block title %}{{ editor.firstname}}{% endblock %}
+{% block title %}{{ editors.firstname}}{% endblock %}
 
 {% block body %}
 
 <div class="alert/alert-success">
-    {{ editor.firstname }} email : {{ editor.email }}
+    {{ editors.firstname }} email : {{ editors.email }}
+    {% if app.user%}
+    <p> Created By : {{ app.user.email }}</p>
+    {% endif %}
 </div>
 {% endblock %}

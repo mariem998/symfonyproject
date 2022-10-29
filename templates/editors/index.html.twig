@@ -6,10 +6,12 @@
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">{{ editor.firstname }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ editor.email }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ editor.firstname }}{{ editor.email }}</h6>
             <a href="{{ path('editor.detail', {id: editor.id}) }}" class="card-link"><i class="fa-solid fa-circle-info"></i></a>
-            <a href="{{ path('editor.delete', {id: editor.id}) }}" class="card-link"><i class="fa-solid fa-user-xmark"></i></a>
-            <a href="{{ path('editor.edit', {id: editor.id}) }}" class="card-link"><i class="fa-solid fa-user-pen"></i></a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('editor.delete', {id: editor.id}) }}" class="card-link"><i class="fa-solid fa-user-xmark"></i></a>
+                <a href="{{ path('editor.edit', {id: editor.id}) }}" class="card-link"><i class="fa-solid fa-user-pen"></i></a>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

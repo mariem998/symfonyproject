@@ -35,6 +35,9 @@ class Editor
     #[ORM\ManyToOne(inversedBy: 'editors')]
     private ?Job $job = null;
 
+    #[ORM\ManyToOne(inversedBy: 'editors')]
+    private ?User $createdBy = null;
+
 //    #[ORM\Column(length: 255, nullable: true)]
 //    private ?string $image = null;
 
@@ -105,4 +108,16 @@ public function setJob(?Job $job): self
 //
 //    return $this;
 //}
+
+public function getCreatedBy(): ?User
+{
+    return $this->createdBy;
+}
+
+public function setCreatedBy(?User $createdBy): self
+{
+    $this->createdBy = $createdBy;
+
+    return $this;
+}
 }

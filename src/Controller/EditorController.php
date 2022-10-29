@@ -13,7 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-#[Route("editor")]
+#[
+    Route("editor"),
+    isGranted('ROLE_USER')
+]
 class EditorController extends AbstractController
 {
     #[Route('/', name:'editor.list')]
@@ -23,7 +26,10 @@ class EditorController extends AbstractController
         return $this->render('editors/index.html.twig',['editors'=> $editors]);
     }
 
-    #[Route('/alls/{page?1}/{nbre?12}', name:'editor.list.alls')]
+    #[
+        Route('/alls/{page?1}/{nbre?12}', name:'editor.list.alls'),
+        isGranted("ROLE_USER")
+    ]
     public function indexAlls(ManagerRegistry $doctrine, $page, $nbre):Response{
         $repository = $doctrine->getRepository(Editor::class);
         $nbEditor= $repository->count([]);
@@ -40,8 +46,11 @@ class EditorController extends AbstractController
     }
 
 
-    #[Route('/{id<\d+>}', name: 'editor.detail')]
-    public function detail( Editor $editor= null):Response{
+    #[
+        Route('/{id<\d+>}', name: 'editor.detail'),
+
+    ]
+    public function detail( Editor $editor= null, $id):Response{
 
         if(!$editor){
             $this->addFlash('error', "La personne d'id n'existe pas ");
@@ -54,6 +63,7 @@ class EditorController extends AbstractController
     #[Route('/add', name: 'editor.add')]
     public function addEditor(ManagerRegistry $doctirine,Request $request):Response{
 
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $editor =new Editor();
         $form=$this->createForm(EditorType::class, $editor);
         $form->handleRequest($request);
@@ -74,6 +84,7 @@ class EditorController extends AbstractController
     #[Route('/edit/{id?0}', name: 'editor.edit')]
     public function EditEditor(Editor $editor =null, ManagerRegistry $doctirine, Request $request, $id): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if(!$editor)
         {
             $new=true;
@@ -93,7 +104,7 @@ class EditorController extends AbstractController
             }
 
             $this->addFlash($editor->getFirstname(), $message);
-            return $this->redirectToRoute('editor.list.alls');
+            return $this->redirectToRoute('editor.detail',["id"=>$id]);
 
         }else{
             return $this->render('editors/add-editor.html.twig',[
@@ -105,7 +116,9 @@ class EditorController extends AbstractController
 
 
 
-#[Route('/delete/{id}', name: 'editor.delete')]
+#[Route(
+    '/delete/{id}', name: 'editor.delete'),
+    isGranted('ROLE_ADMIN')]
     public function deleteEditor(Editor $editor = null, ManagerRegistry $doctrine): RedirectResponse{
         //Récupérer la personne
         if ($editor) {
