@@ -1,0 +1,15 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{#{{ form_start(form) }}#}
+{#    <div>#}
+{#        <div class="col">{{ form_row(form.firstname)  }}</div>#}
+{#    </div>#}
+{#    {{ form_rest(form) }}#}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
