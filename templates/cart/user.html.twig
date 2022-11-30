@@ -1,0 +1,68 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Orders</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="">Home</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">Orders</p>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Cart Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-8 table-responsive mb-5">
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                    <tr>
+                        <th>Id Commande</th>
+                        <th>Email Client</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody class="align-middle">
+
+
+                    {% for order in user.commandes %}
+                        <tr>
+
+                            <td class="align-middle">{{order.id}}</td>
+                            <td class="align-middle">{{order.user.email}}</td>
+                            <td>
+                                {% if order.status == 'processing...' %}
+                                    <span class="badge bg-dark p-2">
+                                                {{order.status}}
+                                            </span>
+                                {% elseif order.status == 'shipped' %}
+                                    <span class="badge bg-success p-2">
+                                                {{order.status}}
+                                            </span>
+                                {% else %}
+                                    <span class="badge bg-danger p-2">
+                                                {{order.status}}
+                                            </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <h6 class="font-weight-medium">No Order</h6>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Cart End -->
+{% endblock %}

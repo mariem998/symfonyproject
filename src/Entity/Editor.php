@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
+
 use App\Repository\EditorsRepository;
 use App\Traits\TimeStampTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EditorsRepository::class)]
-class Editor
+class Editor implements PasswordAuthenticatedUserInterface
 {
 
 
@@ -37,6 +40,15 @@ class Editor
 
     #[ORM\ManyToOne(inversedBy: 'editors')]
     private ?User $createdBy = null;
+
+    #[ORM\Column]
+    private ?string $Role ;
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
 //    #[ORM\Column(length: 255, nullable: true)]
 //    private ?string $image = null;
@@ -120,4 +132,34 @@ public function setCreatedBy(?User $createdBy): self
 
     return $this;
 }
+
+    /**
+     * @return string|null
+     */
+    public function getRole(): ?string
+    {
+        return $this->Role;
+    }
+
+    /**
+     * @param string|null $Role
+     */
+    public function setRole(?string $Role): void
+    {
+        $this->Role = $Role;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+
 }

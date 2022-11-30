@@ -1,0 +1,86 @@
+{% extends 'template.html.twig' %}
+
+
+
+{% block body %}
+
+	<!-- Page Header Start -->
+	<div class="container-fluid bg-secondary mb-5">
+		<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+			<h1 class="font-weight-semi-bold text-uppercase mb-3">Show Contact</h1>
+			<div class="d-inline-flex">
+				<p class="m-0"><a href="">Home</a></p>
+				<p class="m-0 px-2">-</p>
+				<p class="m-0">Show Contact</p>
+			</div>
+		</div>
+	</div>
+	<!-- Page Header End -->
+
+
+	<div class="container mt-4">
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		{% if not contacts.items is same as([]) %}
+
+
+
+			<div class="count mt-4">Il y a
+				{{ contacts.getTotalItemCount }}
+				contact(s)
+			</div>
+			<div class="container-fluid pt-5">
+				<div class="row px-xl-8">
+					<div class="col-lg-8 table-responsive mb-5">
+						<table class="table table-bordered text-center mb-0">
+							<thead class="bg-secondary text-dark">
+							<tr>
+								<th >Id</th>
+								<th >Email</th>
+								<th >Subject</th>
+								<th >Message</th>
+								<th >CreatedAT</th>
+								<th >Delete</th>
+							</tr>
+							</thead>
+							<tbody class="align-middle">
+							{% for contact in contacts %}
+								<tr>
+									<td class="align-middle">{{ contact.id }}</td>
+									<td class="align-middle">{{ contact.email }}</td>
+									<td class="align-middle">{{ contact.subject }}</td>
+									<td class="align-middle">{{ contact.message }}</td>
+									<td>{{ contact.createdAt|date('d/m/Y') }}</td>
+									<td class="align-middle">
+										<a href="{{ path('reclamation.delete', { id: contact.id }) }}" class="btn btn-sm btn-primary">
+											<i class="fa fa-trash"></i>
+										</a>
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="6" class="text-center">
+										<h6 class="font-weight-medium">No contact</h6>
+									</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+			
+			
+			
+			
+
+
+
+		{% endif %}
+	</div>
+{% endblock %}

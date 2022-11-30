@@ -1,0 +1,36 @@
+{% extends "template.html.twig" %}
+
+
+{% block body %}
+	<!-- Page Header Start -->
+	<div class="container-fluid bg-secondary mb-5">
+		<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+			<h1 class="font-weight-semi-bold text-uppercase mb-3">Edit Category</h1>
+			<div class="d-inline-flex">
+				<p class="m-0"><a href="">Home</a></p>
+				<p class="m-0 px-2">-</p>
+				<p class="m-0">Edit Category</p>
+			</div>
+		</div>
+	</div>
+	<!-- Page Header End -->
+	<div class="container">
+
+
+		<form name="category" method="post">
+
+			<div class="form-group">
+				{{ form_label(form.name) }}
+				{{ form_widget(form.name) }}
+				<div class="form-error">
+					{{ form_errors(form.name) }}
+				</div>
+			</div>
+
+			{{ form_row(form._token) }}
+
+			<button type="submit" id="category_submit" name="category[submit]" class="btn btn-primary mt-4">Edit category</button>
+
+
+	</form>
+</div>{% endblock %}

@@ -1,12 +1,14 @@
 {% extends 'template.html.twig' %}
 
+{% block PageTitle %}
+    Ajouter admin
+{% endblock %}
 {% block body %}
+<div class="container">
+    <div class="form-group">
     {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
-{#{{ form_start(form) }}#}
-{#    <div>#}
-{#        <div class="col">{{ form_row(form.firstname)  }}</div>#}
-{#    </div>#}
-{#    {{ form_rest(form) }}#}
+    </div>
+</div>
 {% endblock %}
 
 {% block title %}

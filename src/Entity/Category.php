@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -13,27 +12,30 @@ class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: 'integer')]
+    private $id = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $name = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    private $name;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $active = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $updatedAt;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $updated_at = null;
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $createdAt;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $created_at = null;
-
-    #[ORM\OneToMany(mappedBy: 'id_category', targetEntity: Product::class)]
-    private Collection $products;
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
+    private $products;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->updatedAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
+    }
+    #[ORM\PreUpdate]
+    public function preUpdate(){
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -53,44 +55,32 @@ class Category
         return $this;
     }
 
-    public function getActive(): ?int
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->active;
+        return $this->updatedAt;
     }
 
-    public function setActive(int $active): self
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
-        $this->active = $active;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->createdAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $created_at): self
-    {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Product>
+     * @return Collection|Product[]
      */
     public function getProducts(): Collection
     {
@@ -100,8 +90,8 @@ class Category
     public function addProduct(Product $product): self
     {
         if (!$this->products->contains($product)) {
-            $this->products->add($product);
-            $product->setIdCategory($this);
+            $this->products[] = $product;
+            $product->setCategory($this);
         }
 
         return $this;
@@ -111,11 +101,16 @@ class Category
     {
         if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getIdCategory() === $this) {
-                $product->setIdCategory(null);
+            if ($product->getCategory() === $this) {
+                $product->setCategory(null);
             }
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

@@ -1,0 +1,76 @@
+{% extends "template.html.twig" %}
+
+
+
+{% block body %}
+
+	<!-- Page Header Start -->
+	<div class="container-fluid bg-secondary mb-5">
+		<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+			<h1 class="font-weight-semi-bold text-uppercase mb-3">Add product</h1>
+			<div class="d-inline-flex">
+				<p class="m-0"><a href="">Home</a></p>
+				<p class="m-0 px-2">-</p>
+				<p class="m-0">Add product</p>
+			</div>
+		</div>
+	</div>
+	<!-- Page Header End -->
+
+	<div class="container">
+
+
+
+		{{ form_start(form) }}
+
+		<div class="form-group">
+			{{ form_label(form.name) }}
+			{{ form_widget(form.name) }}
+			<div class="form-error">
+				{{ form_errors(form.name) }}
+			</div>
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form_label(form.category) }}
+			{{ form_widget(form.category) }}
+			<div class="form-error">
+				{{ form_errors(form.category) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.description) }}
+			{{ form_widget(form.description) }}
+			<div class="form-error">
+				{{ form_errors(form.description) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.price) }}
+			{{ form_widget(form.price) }}
+			<div class="form-error">
+				{{ form_errors(form.price) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.image) }}
+			{{ form_widget(form.image) }}
+			<div class="form-error">
+				{{ form_errors(form.image) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_row(form._token) }}
+		</div>
+
+		<div class="form-group">
+			{{ form_row(form.submit) }}
+		</div>
+
+	</div>
+	{{ form_end(form) }}
+</div>{% endblock %}

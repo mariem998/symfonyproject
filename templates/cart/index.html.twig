@@ -1,0 +1,122 @@
+{% extends "template.html.twig" %}
+
+
+{% block body %}
+
+
+    <!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Shopping Cart</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="">Home</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Shopping Cart</p>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+    <!-- Cart Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            <table class="table table-bordered text-center mb-0">
+                <thead class="bg-secondary text-dark">
+                <tr>
+                    <th>Products</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Quantity</th>
+                    <th>Remove</th>
+                </tr>
+                </thead>
+                <tbody class="align-middle">
+
+                {% set total = null %}
+
+                {% for element in cart %}
+                <tr>
+                    <td class="align-middle">{{ element.product.name }}</td>
+                    <td class="align-middle">{{ element.product.price }} dt</td>
+                    <td class="align-middle">{{ element.quantity }}</td>
+                    <td class="align-middle">{{ element.quantity * element.product.price }} dt</td>
+
+                    <td class="align-middle">
+                        <div class="input-group quantity mx-auto" style="width: 100px;">
+                            <div class="input-group-btn">
+                                <a href="{{path("cart_remove", {id: element.product.id})}}" class="btn btn-sm btn-primary btn-minus">
+                                    <i class="fa fa-minus"></i>
+                                </a>
+                            </div>
+                            <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
+                            <div class="input-group-btn">
+                                <a href="{{path("cart_add", {id: element.product.id})}}" class="btn btn-sm btn-primary btn-plus">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="align-middle">
+                        <a href="{{path("cart_delete", {id: element.product.id})}}" class="btn btn-sm btn-primary">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </td>
+
+                </tr>
+                    {% set total = total + (element.product.price * element.quantity) %}
+
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            <h6 class="font-weight-medium">Votre panier est vide</h6>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-lg-4">
+            <form action="#">
+                <button class="btn btn-block btn-primary my-3 py-3">Thank you for your trust
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                </button>
+            </form>
+
+            <div class="card border-secondary mb-5">
+                <div class="card-header bg-secondary border-0">
+                    <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium">Subtotal</h6>
+                        <h6 class="font-weight-medium">{{ total }} dt</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">8 dt</h6>
+                    </div>
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5 class="font-weight-bold">Total</h5>
+                        <h5 class="font-weight-bold">{{ total + 8 }} Dt</h5>
+                    </div>
+                    <form action="{{path("cart_delete_all")}}">
+                    <button class="btn btn-block btn-primary my-3 py-3">Delete Cart</button>
+                    </form>
+                    <form action="{{ path('order') }}">
+                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart End -->
+
+{% endblock %}
