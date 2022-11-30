@@ -27,7 +27,7 @@
                         <th>Date</th>
                         <th>Email Client</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th>Details</th>
                     </tr>
                     </thead>
                     <tbody class="align-middle">
@@ -39,33 +39,17 @@
                             <td class="align-middle">{{order.id}}</td>
                             <td class="align-middle">{{order.createdat|date('d/m/Y')}}</td>
                             <td class="align-middle">{{order.user.email}}</td>
-
                             <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{order.status}}
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item"
-                                               href="{{path('order_status_update',{order: order.id,status: 'Expédié'})}}">Expédier</a></li>
-                                        <li><a class="dropdown-item" href="{{path('order_status_update',{order: order.id,status: 'Rejeté'})}}">Rejeter</a></li>
-                                    </ul>
-                                </div>
-
-
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                                    <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">{{order.status}}</a>
                                     <div class="dropdown-menu rounded-0 m-0">
-                                        <a href="{{path('order_status_update',{order: order.id,status: 'Expédié'})}}" class="dropdown-item">Expédier</a>
-                                        <a href="{{path('order_status_update',{order: order.id,status: 'Rejeté'})}}" class="dropdown-item">Rejeter</a>
+                                        <a href="{{path('order_status_update',{order: order.id, status: 'Shipped'})}}" class="dropdown-item">Shipped</a>
+                                        <a href="{{path('order_status_update',{order: order.id, status: 'Rejected'})}}" class="dropdown-item">Rejected</a>
                                     </div>
                                 </div>
-
-
-
                             </td>
                             <td class="align-middle">
-                                <a href="" class="btn btn-sm btn-primary">details</a>
+                                <a href="" class="btn btn-sm btn-primary">show</a>
                             </td>
                         </tr>
                     {% else %}

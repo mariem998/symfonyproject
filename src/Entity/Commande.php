@@ -29,8 +29,7 @@ class Commande
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $modelivraison = null;
+
 
 
 
@@ -111,17 +110,7 @@ class Commande
         return $this;
     }
 
-    public function getModelivraison(): ?string
-    {
-        return $this->modelivraison;
-    }
 
-    public function setModelivraison(string $modelivraison): self
-    {
-        $this->modelivraison = $modelivraison;
-
-        return $this;
-    }
 
 
 
