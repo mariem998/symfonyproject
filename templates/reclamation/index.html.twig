@@ -19,21 +19,11 @@
 
 
 	<div class="container mt-4">
-		{% for message in app.flashes('success') %}
-			<div class="alert alert-success mt-4">
-				{{ message }}
-			</div>
-		{% endfor %}
+
 
 		{% if not contacts.items is same as([]) %}
 
-
-
-			<div class="count mt-4">Il y a
-				{{ contacts.getTotalItemCount }}
-				contact(s)
-			</div>
-			<div class="container-fluid pt-5">
+				<div class="container-fluid pt-5">
 				<div class="row px-xl-8">
 					<div class="col-lg-8 table-responsive mb-5">
 						<table class="table table-bordered text-center mb-0">
@@ -50,7 +40,7 @@
 							<tbody class="align-middle">
 							{% for contact in contacts %}
 								<tr>
-									<td class="align-middle">{{ contact.id }}</td>
+									<td class="align-middle">{{loop.index}}</td>
 									<td class="align-middle">{{ contact.email }}</td>
 									<td class="align-middle">{{ contact.subject }}</td>
 									<td class="align-middle">{{ contact.message }}</td>

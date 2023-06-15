@@ -30,6 +30,9 @@ class CartController extends AbstractController
      */
     public function index(Cart $cart)
     {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('cart/index.html.twig', [
             'cart' => $cart->getFull()
         ]);

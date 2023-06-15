@@ -28,8 +28,15 @@ class Coordinate
     #[ORM\Column(length: 255)]
     private ?string $pays = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $livraison = null;
+
     #[ORM\Column]
     private ?int $number = null;
+
+    #[ORM\OneToOne( targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -96,14 +103,38 @@ class Coordinate
         return $this;
     }
 
-    public function getNumber(): ?int
+    public function getLivraison(): ?string
+    {
+        return $this->livraison ;
+    }
+
+    public function setLivraison(string $livraison ): self
+    {
+        $this->livraison  = $livraison ;
+
+        return $this;
+    }
+
+    public function getNumber(): ?string
     {
         return $this->number;
     }
 
-    public function setNumber(int $number): self
+    public function setNumber(string $number): self
     {
         $this->number = $number;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

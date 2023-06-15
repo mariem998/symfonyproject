@@ -21,7 +21,6 @@ class EditorType extends AbstractType
         $builder
             ->add('firstname')
             ->add('email')
-            ->add('job')
             ->add('role',ChoiceType::class, [
                 'choices'  => [
                     'ROLE' =>null,

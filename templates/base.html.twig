@@ -70,6 +70,7 @@
 
 
     <div class="container marketing {% if block('carousel') is not defined %}mt-5{% endif %}">
+        {% include "_partials/_flash.html.twig" %}
 
         {% block content %}
         {% endblock %}

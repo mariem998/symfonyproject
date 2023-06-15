@@ -73,6 +73,20 @@ class CoordinateType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label  mt-4'
                 ]])
+
+            ->add('livraison', ChoiceType::class, [
+                'choices' => [
+                    'Express delivery'=>'Express delivery',
+                    'Delivery to a relay point'=>'Delivery to a relay point',
+                    ' home delivery'=>' home delivery'
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'label' => 'Delivery method',
+                'label_attr' => [
+                    'class' => 'form-label  mt-4'
+                ]])
             ->add('address', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',

@@ -17,12 +17,13 @@ class MailService
         $this->mailer = $mailer;
     }
 
-    public function sendEmail(
+    public function send(
         string $from,
+        string $to,
         string $subject,
         string $htmlTemplate,
         array $context,
-        string $to = 'rahmasassi12335@gmail.com'
+
     ): void {
         $email = (new TemplatedEmail())
             ->from($from)

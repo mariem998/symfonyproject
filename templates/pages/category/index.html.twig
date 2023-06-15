@@ -18,24 +18,13 @@
 	</div>
 	<!-- Page Header End -->
 	<div class="container mt-4">
-	{% for message in app.getFlashes('success') %}
-		<div class="alert alert-success">
-			{{ message }}
-		</div>
-	{% endfor %}
+
 	<div class="container-fluid pt-8">
 		<div>
 			<a href="{{ path('category.new') }}" class="btn btn-primary">
 				Add category
 			</a>
 		</div>
-		<div class="count mt-4">There are
-			{{ categorys.getTotalItemCount }}
-			category(s)
-		</div>
-
-
-
 
 		<div class="container-fluid pt-5">
 			<div class="row px-xl-8">
@@ -56,7 +45,7 @@
 
 						{% for category in categorys %}
 							<tr>
-								<td class="align-middle">{{ category.id }}</td>
+								<td class="align-middle">{{loop.index}}</td>
 								<td class="align-middle">{{ category.name }}</td>
 								<td>{{ category.updatedAt|date('d/m/Y') }}</td>
 								<td>{{ category.createdAt|date('d/m/Y') }}</td>

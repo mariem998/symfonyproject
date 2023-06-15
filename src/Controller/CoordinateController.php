@@ -20,9 +20,10 @@ class CoordinateController extends AbstractController
     #[Route('/addCoordinate', name:'add_coordinate')]
     public function addCoordinate(Request $request, EntityManagerInterface $manager): Response
     {
-        $userId = $this->getUser();
-        //dd($userId->getUserIdentifier());
+
+        $userid = $this->getUser();
         $coordinate = new Coordinate();
+        $coordinate->setUserId($userid);
         $form = $this->createForm(CoordinateType::class, $coordinate);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
@@ -30,6 +31,7 @@ class CoordinateController extends AbstractController
             $manager->persist($coordinate);
             $manager->flush();
         }
+
         return $this->render('checkout/index.html.twig', [
             'CoordinateType'=>$form->createView()
         ]);

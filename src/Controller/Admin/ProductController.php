@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -150,4 +152,44 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('product.index');
     }
+
+
+    /*=== Search Bar ===*/
+    public function searchForm (){
+        $form= $this->createFormBuilder()
+            ->setAction($this->generateUrl('handleSearch'))
+            ->setMethod('POST')
+            ->add('text',TextType::class,[
+
+                'attr'=>[
+                    'placeholder'=>'Search for products',
+                    'required'=>false,
+                    'class' => 'form-control'
+                ]
+            ])
+            ->getForm();
+        return $this->render('products/searchBar.html.twig',[
+            'searchForm'=>$form->createView()
+        ]);
+
+    }
+    /**
+     * @Route("/handleSearch", name="handleSearch")
+     * @param Request $request
+     */
+    public function handleSearch(Request $request, ProductRepository $repo)
+    {
+
+        $formValues = $request->get('form');
+        $query= $formValues['text'];
+
+        if($query) {
+            $Products= $repo->findProductByName(trim($query));
+
+            return $this->render('products/index.html.twig', [
+                'products' => $Products
+            ]);
+        }
+    }
+
 }

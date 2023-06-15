@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,29 +47,29 @@ class ProductType extends AbstractType
 
 
 
-             /**
-             ->add('category', ChoiceType::class, [
+            /**
+            ->add('category', ChoiceType::class, [
 
-                 'choice_label' => function (?Category $category) {
-                     return $category ? strtoupper($category->getId()) : '';
-                 },
+            'choice_label' => function (?Category $category) {
+            return $category ? strtoupper($category->getId()) : '';
+            },
 
-             ])
+            ])
              */
 
 
-            ->add('description', TextType::class, [
+            ->add('description', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => '2',
-                    'maxlength' => '50'
+                    'maxlength' => '1000'
                 ],
                 'label' => 'Description',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 50]),
+                    new Assert\Length(['min' => 2, 'max' => 1000]),
                     new Assert\NotBlank()
                 ]
             ])
@@ -82,7 +83,7 @@ class ProductType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\Positive(),
-                    new Assert\LessThan(200)
+                    new Assert\LessThan(15555)
                 ]
             ])
 
@@ -95,7 +96,7 @@ class ProductType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary mt-4'
                 ],
-                'label' => 'Add product'
+                'label' => 'Add-Edit product'
             ]);
 
     }

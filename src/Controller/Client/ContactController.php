@@ -34,13 +34,7 @@ class ContactController extends AbstractController
             $manager->persist($contact);
             $manager->flush();
 
-            //Email
-            $mailService->sendEmail(
-                $contact->getEmail(),
-                $contact->getSubject(),
-                'emails/contact.html.twig',
-                ['contact' => $contact]
-            );
+
 
             $this->addFlash(
                 'success',

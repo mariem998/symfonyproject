@@ -1,76 +1,106 @@
-
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>Login 10</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>EShop</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link href="{{ asset('assets/img/favicon.ico')}}" rel="icon">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{{ asset('assets/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
 </head>
-<body class="img js-fullheight" style="background-image: url(images/gris.jpg);">
-<section class="ftco-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="row justify-content-center">
-                    <a href="" class="text-decoration-none">
-                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shop</h1>
-                    </a>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="login-wrap p-0">
-                    <div class="mb-4 text-center">
 
-                        <a href="/register" style="color: #fff"><h3 class="mb-4 text-center">Have an account?</h3></a>
-                    </div>
-                    <form action="#" class="signin-form" method="post">
-                        {% if error %}
-                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
-                        <div class="form-group">
-                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus >
-                        </div>
-
-                        <div class="form-group">
-                            <input id="password-field" name="password" type="password" class="form-control" autocomplete="current-password" required>
-                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                        </div>
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                        <div class="form-group">
-                            <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
-                        </div>
-                        <div class="form-group d-md-flex">
-                            <div class="w-50">
-                                <label class="checkbox-wrap checkbox-primary">Remember Me
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="w-50 text-md-right">
-                                <a href="#" style="color: #fff">Forgot Password</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<body>
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Login</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="{{ path('app_register') }}">registration</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Login</p>
         </div>
     </div>
-</section>
+</div>
+<!-- Page Header End -->
 
-<script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/popper.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
+<div class="row px-xl-5">
+    <div class="col-lg-7 mb-5">
+        <form method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+
+            <h1 class="h3 mb-3 font-weight-normal">      </h1>
+            <label for="inputEmail">Email</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+            <label for="inputPassword">Password</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+
+            {#        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.#}
+            {#        See https://symfony.com/doc/current/security/remember_me.html#}
+
+            <div class="form-group d-md-flex">
+                <div class="w-50">
+                    <label class="checkbox-wrap checkbox-primary">Remember Me
+                        <input type="checkbox" checked>
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="w-50 text-md-right">
+                    <a href="{{ path('forgotten_password') }}" style="color: #7b7d85">Forgot Password</a>
+                </div>
+            </div>
+
+            <button class="btn btn-lg btn-primary mt-2" type="submit">
+                Sign in
+            </button>
+        </form>
+    </div>
+</div>
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('assets/lib/easing/easing.min.js')}}"></script>
+<script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+
+<!-- Contact Javascript File -->
+<script src="{{ asset('assets/mail/jqBootstrapValidation.min.js')}}"></script>
+<script src="{{ asset('assets/mail/contact.js')}}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
+<!-- Template Javascript -->
 
 </body>
-</html>
 
+</html>

@@ -23,7 +23,7 @@
 
 
             <!-- Shop Product Start -->
-            <div class="col-lg-9 col-md-12">
+            <div class="col-lg-11">
                 <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
@@ -34,19 +34,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="dropdown ml-4">
-                                <div>
-                                    <a href="{{path('product_index')}}" class="btn btn-sm btn-outline-dark mx-1">
-                                        All
-                                    </a>
-                                    {% for category in categories %}
-                                        <a href="{{path('product_category',{category: category.id})}}" class="btn btn-sm btn-outline-dark mx-1">
-                                            {{category.name}}
-                                        </a>
-                                    {% endfor %}
-                                </div>
 
-                            </div>
 
                         </div>
                     </div>
@@ -54,13 +42,13 @@
                     {% for product in products %}
                         <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                             <div class="card product-item border-0 mb-4">
-                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0" >
                                     <img class="img-fluid w-100" src="{{ asset('uploads/') ~ product.image }}" alt="">
                                 </div>
                                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                     <h6 class="text-truncate mb-3">{{ product.name}}</h6>
                                     <div class="d-flex justify-content-center">
-                                        <h6>{{ product.price }}</h6><h6 class="text-muted ml-2"><del>{{ product.price }}</del></h6>
+                                        <h6>{{ product.price }}</h6>
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-between bg-light border">

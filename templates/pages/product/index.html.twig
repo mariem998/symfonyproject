@@ -17,14 +17,9 @@
 	</div>
 	<!-- Page Header End -->
 
-	{% for message in app.getFlashes('success') %}
-		<div class="alert alert-success">
-			{{ message }}
-		</div>
-	{% endfor %}
+
 	<div class="container-fluid pt-8" >
 
-		<div>There are {{ products.getTotalItemCount }} product(s)<br><br>
 			<a href="{{ path('product.new') }}" class="btn btn-primary">
 				Add product
 			</a>
@@ -54,7 +49,7 @@
 
 					{% for product in products %}
 						<tr>
-							<td class="align-middle">{{ product.id }}</td>
+							<td class="align-middle">{{loop.index}}</td>
 							<td class="align-middle">{{ product.category }}</td>
 							<td class="align-middle">{{ product.name }}</td>
 							<td class="align-middle">{{ product.description }}</td>

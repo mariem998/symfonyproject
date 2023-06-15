@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
+use App\Entity\Coordinate;
 use App\Entity\LigneDeCommande;
 use App\Entity\Order;
 use App\Entity\OrderDetails;
@@ -35,7 +36,9 @@ class OrderController extends AbstractController
     public function index(Cart $cart, Request $request)
     {
 
-
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         $form = $this->createForm(OrderType::class, null, [
             'user' => $this->getUser()
         ]);
@@ -51,16 +54,15 @@ class OrderController extends AbstractController
      */
     public function add(Cart $cart, Request $request)
     {
+
         $form = $this->createForm(OrderType::class, null, [
             'user' => $this->getUser()
         ]);
-
+        $orderD = [];
         $form->handleRequest($request);
         $order = $form->getData();
         if ($form->isSubmitted() && $form->isValid()) {
             $date = new \DateTime();
-
-
 
             // Enregistrer ma commande Order()
             $order = new Commande();
@@ -70,6 +72,18 @@ class OrderController extends AbstractController
 
 
             $this->entityManager->persist($order);
+            // Enregistrer Coordinate
+            $coordinate = new Coordinate();
+            $coordinate->setUser(($this->getUser()));
+            $data= $form->getData();
+            $coordinate->setAddress($data['address']);
+            $coordinate->setFirstname($data['firstname']);
+            $coordinate->setLastname($data['lastname']);
+            $coordinate->setNumber($data['number']);
+            $coordinate->setPays($data['pays']);
+            $coordinate->setZipcode($data['zipcode']);
+            $coordinate->setLivraison($data['livraison']);
+            $this->entityManager->persist($coordinate);
 
             // Enregistrer mes produits OrderDetails()
             foreach ($cart->getFull() as $product) {
@@ -85,15 +99,17 @@ class OrderController extends AbstractController
             $this->entityManager->flush();
 
 
+
         }
 
-        return $this->redirectToRoute('product_index');
+        return $this->redirect('/checkout');
     }
 
 
     #[Route('/commandes', name: 'orders_list')]
     public function afficher(): Response
     {
+
         $commandes = $this->commandeRepository->findAll();
         return $this->render('cart/admin.html.twig', [
             'orders' => $commandes

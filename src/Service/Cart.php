@@ -65,6 +65,7 @@ class Cart
 
     public function getFull()
     {
+
         $cartComplete = [];
 
         if ($this->get()) {
